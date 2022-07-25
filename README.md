@@ -1,16 +1,5 @@
- .----------------.  .----------------.  .----------------.  .----------------.  .----------------.  .----------------. 
-| .--------------. || .--------------. || .--------------. || .--------------. || .--------------. || .--------------. |
-| | ____    ____ | || |     _____    | || |  ____  ____  | || |  ____  ____  | || | _____  _____ | || |  _________   | |
-| ||_   \  /   _|| || |    |_   _|   | || | |_  _||_  _| | || | |_   ||   _| | || ||_   _||_   _|| || | |  _   _  |  | |
-| |  |   \/   |  | || |      | |     | || |   \ \  / /   | || |   | |__| |   | || |  | |    | |  | || | |_/ | | \_|  | |
-| |  | |\  /| |  | || |      | |     | || |    > `' <    | || |   |  __  |   | || |  | '    ' |  | || |     | |      | |
-| | _| |_\/_| |_ | || |     _| |_    | || |  _/ /'`\ \_  | || |  _| |  | |_  | || |   \ `--' /   | || |    _| |_     | |
-| ||_____||_____|| || |    |_____|   | || | |____||____| | || | |____||____| | || |    `.__.'    | || |   |_____|    | |
-| |              | || |              | || |              | || |              | || |              | || |              | |
-| '--------------' || '--------------' || '--------------' || '--------------' || '--------------' || '--------------' |
- '----------------'  '----------------'  '----------------'  '----------------'  '----------------'  '----------------''
 ---
-# GitHub | @mixhut | v1.5 ============================================================================
+# GitHub | @mixhut | v1.5 ==============================
 ---
 ## Selenium_PAA
 ``` Description
@@ -32,13 +21,13 @@
 ```
 
 ### To-Do:
-[ ] Make clearer functions and better naming system
-[ ] Create function for taking SERP KWs > PAAs, and function for PAAs > Pickle/JSON
-[ ] Convert bash cleaning scripts to python and add to tools.py
-[x] Look into RAM handling/cleaning for performance (meantime pause/restart every 200 PAAs)
-[ ] Future: Use Click or similar module to allow running from the CLI 
-[ ] Add pickle to JSON converter to end of script
-[ ] Add command line arguments - e.g. for PROJECT_NAME, etc
+- [ ] Make clearer functions and better naming system
+- [ ] Create function for taking SERP KWs > PAAs, and function for PAAs > Pickle/JSON
+- [ ] Convert bash cleaning scripts to python and add to tools.py
+- [x] Look into RAM handling/cleaning for performance (meantime pause/restart every 200 PAAs)
+- [ ] Future: Use Click or similar module to allow running from the CLI 
+- [ ] Add pickle to JSON converter to end of script
+- [ ] Add command line arguments - e.g. for PROJECT_NAME, etc
 
 
 ### Requirements:
