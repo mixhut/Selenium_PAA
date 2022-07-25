@@ -1,7 +1,7 @@
 ---
-# GitHub | @mixhut | v1.5 ==============================
+# Selenium PAA
 ---
-## Selenium_PAA
+## Selenium Firefox Webdriver & PAA Script
 ``` Description
 
 - Combines Selenium engine with the people_also_ask project based on bs4.
@@ -10,7 +10,7 @@
 
 ```
 
-## Changelog:
+## Changelog (v1.5):
 ``` v1.5
 - Added some functions into a class 'GSearch' (needs refined)
 - Fixed RAM issues with webdriver not exiting properly (__init__, __del__)
