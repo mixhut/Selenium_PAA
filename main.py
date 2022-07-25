@@ -1,6 +1,6 @@
-# # # # Selenium_PAA - v1.3 # # # # #
+# # # # Selenium_PAA - v1.5 # # # # #
 
-from functions.foxwd import get_answer
+from functions.foxwd_new import GSearch as GSearch
 from functions.tools import load_pickle, save_pickle
 from constants import PROJECT_DIR, PICKLE_FILE, CHECKPOINT_FILE, PROJECT_NAME
 from os.path import exists
@@ -31,7 +31,6 @@ if checkpoint_exists is True:
 else:
     checkpoint = int(0)
 
-
 with open(input_questions, 'r') as file:
     my_questions = [line.rstrip('\n') for line in file]
 
@@ -41,8 +40,9 @@ for i in range(checkpoint, len(my_questions)):
     print(' ~ Getting Answer', i)
     print(' ~~ Question:', my_questions[i])
     try:
-        output = get_answer(my_questions[i])
-        # print(output)
+        gs = GSearch(my_questions[i]).get_answer()
+        output = gs
+        print(output)
         data.append(output)
         save_pickle(PICKLE_FILE, data)
     except Exception as e:
@@ -55,5 +55,6 @@ for i in range(checkpoint, len(my_questions)):
         f = open(CHECKPOINT_FILE, 'w')
         f.write(str(i))
         f.close()
+
 
 print('=== Completed ===')
