@@ -2,23 +2,22 @@
 # Selenium PAA
 ---
 ## Selenium Firefox Webdriver & PAA Script
-``` Description
 
+### Description:
 - Combines Selenium engine with the people_also_ask project based on bs4.
 - Based on the Firefox Webdriver
 - Removes requests modules and replaced with selenium
 
-```
+
 
 ## Changelog (v1.5):
-``` v1.5
 - Added some functions into a class 'GSearch' (needs refined)
 - Fixed RAM issues with webdriver not exiting properly (__init__, __del__)
 - Removed selenium-wire integration (throwing HTTPS errors with new FF profile)
 - Removed interceptor (selenium-wire)
 - Adjusted default PAA scrape level to 7
 - Tweak directory structure
-```
+
 
 ### To-Do:
 - [ ] Make clearer functions and better naming system
