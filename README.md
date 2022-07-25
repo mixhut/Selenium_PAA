@@ -5,8 +5,8 @@
 
 ### Description:
 - Combines Selenium engine with the people_also_ask project based on bs4.
-- Based on the Firefox Webdriver
-- Removes requests modules and replaced with selenium
+- Built with Firefox Webdriver
+- Removes requests modules / replaced with Selenium
 
 
 

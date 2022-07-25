@@ -24,7 +24,7 @@ def load_ff():
     service = Service(GECKOPATH)
     profile_path = FF_PROFILE
     options = Options()
-    options.headless = False
+    options.headless = True
     # options.add_argument('--ignore-certificate-errors')
     set_driver = webdriver.Firefox(firefox_profile=profile_path, options=options, service=service)
     return set_driver
