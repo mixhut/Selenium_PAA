@@ -1,0 +1,11 @@
+# created by virtualenv automatically
+NOTES.md
+constants.py
+testing.py
+/tmp*
+/__pycache__*
+/venv/*
+geckodriver.log
+/functions/__pycache__*
+# /.idea*
+/testing*

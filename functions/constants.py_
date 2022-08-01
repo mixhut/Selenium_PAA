@@ -1,0 +1,23 @@
+from os.path import dirname, join
+from main import project_name
+
+GECKOPATH = r'/path/to/geckodriver'
+FF_PROFILE = r'/path/to/.mozilla/firefox/profile'
+
+project_root = dirname(dirname(__file__))
+project_output = join(project_root, 'output/')
+project_output_file = project_output + project_name
+OUTPUT_DIR = project_root
+
+CSV_FILE = project_output_file + '.csv'
+JSON_FILE = project_output_file + '.json'
+JSON_S1 = project_output_file + '_S1.json'
+JSON_S2 = project_output_file + '_S2.json'
+JSON_S3 = project_output_file + '_S3.json'
+QA_JSON_FILE = project_output_file + '_QAs.json'
+QA_RELATED_JSON = project_output_file + '_QAs_Related.json'
+QA_MEGA_JSON = project_output_file + '_QAs_Mega.json'
+PICKLE_FILE = project_output_file + '.pickle'
+CHECKPOINT_FILE = project_output_file + '.save'
+
+URL = 'https://www.google.com/search?hl=en'

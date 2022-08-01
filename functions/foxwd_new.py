@@ -1,13 +1,13 @@
-# # # # Selenium_PAA - v1.5 # # # # #
+# # # # Selenium_PAA - v1.7 # # # # #
 import time
-from constants import FF_PROFILE, GECKOPATH, URL
+from functions.constants import FF_PROFILE, GECKOPATH, URL
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.firefox.service import Service
 from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.support.wait import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support import expected_conditions as ec
 from typing import List, Dict, Any, Optional, Generator
 
 from bs4 import BeautifulSoup
@@ -20,11 +20,12 @@ from people_aa.exceptions import (
     FeaturedSnippetParserError,
 )
 
+
 def load_ff():
-    service = Service(GECKOPATH)
+    service = Service(executable_path=GECKOPATH)
     profile_path = FF_PROFILE
     options = Options()
-    options.headless = True
+    options.headless = True  # Debug
     # options.add_argument('--ignore-certificate-errors')
     set_driver = webdriver.Firefox(firefox_profile=profile_path, options=options, service=service)
     return set_driver
@@ -36,13 +37,15 @@ class GSearch:
     results_selector = '//div[contains(@id, "result-stats")]'
     item_tag_selector = "//div[contains(@class, 'related-question-pair')]"
 
-    def __init__(self, question):
+    def __init__(self, question=None, length=1, query=None):
         self.driver = load_ff()
         self.driver.get(URL)
         # self.driver.fullscreen_window()
         self.question = question
+        self.length = length
+        self.query = query
 
-    def search(self, query):
+    def search(self, query, length=1):
 
         # command to remove css images
         # self.driver.execute_script("document.head.parentNode.removeChild(document.head)")
@@ -51,32 +54,52 @@ class GSearch:
         except Exception:
             self.driver.find_element(By.ID, 'recaptcha')
             print("Captcha Page - Enter within 60s")
-            WebDriverWait(self.driver, timeout=60).until(EC.visibility_of_element_located((
+            WebDriverWait(self.driver, timeout=60).until(ec.visibility_of_element_located((
                 By.XPATH, self.search_tag_selector)))
             self.driver.find_element(By.XPATH, self.search_tag_selector).send_keys(query + Keys.RETURN)
 
         # Added WebDriverWait to check results page before continuing, otherwise fails by going too fast
-        WebDriverWait(self.driver, timeout=10).until(EC.visibility_of_element_located((
+        WebDriverWait(self.driver, timeout=10).until(ec.visibility_of_element_located((
             By.XPATH, self.results_selector)))
 
         paa = self.driver.find_elements(By.XPATH, self.item_tag_selector)
 
         # MANUALLY SET PAA SCRAPING LEVEL (length)
-        length = 7
+        length = length
 
         if not paa or len(paa) == 0:
             print(f" ! No PAAs found for {query}")
-            time.sleep(0.5)
+            time.sleep(0.3)
             self.driver.close()
-            time.sleep(0.5)
+            time.sleep(0.3)
 
         else:
             size = 0
             while size < length:
                 paa[-1].click()
-                time.sleep(0.5)
+                # Add page scroll items into view here
+                time.sleep(0.2)
                 paa = self.driver.find_elements(By.XPATH, self.item_tag_selector)
                 size += 1
+
+        document = BeautifulSoup(self.driver.page_source, 'html.parser')
+        return document
+
+    def top_urls(self, query):
+
+        try:
+            self.driver.find_element(By.XPATH, self.search_tag_selector).send_keys(query + Keys.RETURN)
+        except Exception:
+            # TO-DO: Add Recaptcha v2 solver integration here
+            self.driver.find_element(By.ID, 'recaptcha')
+            print("Captcha Page - Enter within 60s")
+            WebDriverWait(self.driver, timeout=60).until(ec.visibility_of_element_located((
+                By.XPATH, self.search_tag_selector)))
+            self.driver.find_element(By.XPATH, self.search_tag_selector).send_keys(query + Keys.RETURN)
+
+        # Added WebDriverWait to check results page before continuing, otherwise fails by going too fast
+        WebDriverWait(self.driver, timeout=10).until(ec.visibility_of_element_located((
+            By.XPATH, self.results_selector)))
 
         document = BeautifulSoup(self.driver.page_source, 'html.parser')
         return document
@@ -182,7 +205,7 @@ class GSearch:
             questions |= set(self.get_answer(text)["related_questions"])
             questions -= searched_text
 
-    def get_simple_answer(self, question: str, depth: bool = False) -> str:
+    def get_simple_answer(self) -> str:
         """
         return a text as summary answer for the question
 
@@ -190,16 +213,16 @@ class GSearch:
         :param bool depth: return the answer of first related question
             if no answer found for question
         """
-        document = self.search(question)
+        document = self.search(self.question)
         featured_snippet = get_featured_snippet_parser(
-                question, document)
+                self.question, document)
         if featured_snippet:
             return featured_snippet.response
-        if depth:
-            related_questions = self.get_related_questions(question, 10)
-            if not related_questions:
-                return ""
-            return self.get_simple_answer(related_questions[0])
+        # if depth:
+        #     related_questions = self.get_related_questions(self.question, 10)
+        #     if not related_questions:
+        #         return ""
+        #     return self.get_simple_answer(related_questions[0])
         return ""
 
     def __del__(self):
